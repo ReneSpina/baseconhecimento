@@ -8,6 +8,7 @@ namespace baseConhecimento.Controllers
 {
     public class HomeController : Controller
     {
+        //teste
         public ActionResult Index()
         {
             return View();
