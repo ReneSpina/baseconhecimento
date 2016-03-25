@@ -1,0 +1,28 @@
+﻿@model baseConhecimento.Models.Item
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.nome</h2>
+
+<div>
+    <hr />
+    <div class="dl-horizontal">
+        <div class="imagemDetalhes">
+            <img src="~/Imagens/@(Model.imagem).jpg" alt="Sem Imagem">
+        </div>
+
+        <div class="descricao">
+            <p>
+                @Html.DisplayFor(model => model.descricao)
+            </p>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id_ic }) |
+    @Html.ActionLink("Deletar", "Delete", new { id = Model.id_ic }) |
+    @Html.ActionLink("Voltar a lista", "Index")
+</p>
