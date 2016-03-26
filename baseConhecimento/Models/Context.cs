@@ -45,17 +45,17 @@ namespace baseConhecimento.Models
             return (itens);
         }
 
-        public List<problema> retornadados_problema()
+        public List<problema> retornadados_problemas()
         {
             MySqlConnection conectado = conecta();
             MySqlDataReader reader = null;
-            MySqlCommand comm = new MySqlCommand("SELECT * FROM `itens` order by ranking desc", conectado);
+            MySqlCommand comm = new MySqlCommand("SELECT * FROM `problema` order by ranking desc", conectado);
             reader = comm.ExecuteReader();
             while (reader.Read())
             {
                 problemas.Add(new problema()
                 {
-                    id_itens = Convert.ToInt32(reader["id_itens"].ToString()),
+                    id_problema = Convert.ToInt32(reader["id_problema"].ToString()),
                     nome = reader["nome"].ToString(),
                     descricao = reader["descricao"].ToString(),
                     ranking = Convert.ToInt32(reader["ranking"].ToString()),
@@ -69,7 +69,7 @@ namespace baseConhecimento.Models
         }
 
 
-        public void inseredados(Item itens)
+        public void inseredados_itens(Item itens)
         {
             MySqlConnection conectado = conecta();
             //MySqlDataReader reader = null;
@@ -78,7 +78,19 @@ namespace baseConhecimento.Models
             conectado.Close();
         }
 
-        public Item retornavalor(int id)
+        public void inseredados_problemas(problema problemas)
+        {
+            MySqlConnection conectado = conecta();
+            //MySqlDataReader reader = null;
+            MySqlCommand comm = new MySqlCommand("Insert Into `problema` (nome, descricao, imagem, id_ic) values('" + problemas.nome + "','" + problemas.descricao + "','" + problemas.imagem + "','" + problemas.id_ic + "')", conectado);
+            comm.ExecuteNonQuery();
+            conectado.Close();
+        }
+
+
+
+
+        public Item retornavalor_itens(int id)
         {
             Item item = new Item();
             MySqlConnection conectado = conecta();
@@ -98,11 +110,42 @@ namespace baseConhecimento.Models
             return (item);
         }
 
-        public void alteradados(Item item)
+        public problema retornavalor_problemas(int id)
+        {
+            problema problema = new problema();
+            MySqlConnection conectado = conecta();
+            MySqlCommand comm = new MySqlCommand("SELECT * FROM problema WHERE id_problema =" + id, conectado);
+            //comm.ExecuteReader();
+            MySqlDataReader reader = comm.ExecuteReader();
+            //reader = comm.ExecuteReader();
+            while (reader.Read())
+            {
+                problema.id_problema = Convert.ToInt32(reader["id_problema"].ToString());
+                problema.nome = reader["nome"].ToString();
+                problema.descricao = reader["descricao"].ToString();
+                problema.imagem = reader["imagem"].ToString();
+                problema.id_ic = Convert.ToInt32(reader["id_ic"].ToString());
+            }
+            reader.Close();
+            conectado.Close();
+            return (problema);
+        }
+
+        public void alteradados_itens(Item item)
         {
             MySqlConnection conectado = conecta();
             //update ic SET nome = 'Rene', descricao = 'Spina', imagem = 'Teste' where id_ic = 3
             MySqlCommand comm = new MySqlCommand("UPDATE `ic` SET nome = '"+item.nome+"', descricao = '"+item.descricao+"', imagem = '"+item.imagem+"' where id_ic = '"+item.id_ic+"'", conectado);
+            comm.ExecuteNonQuery();
+            conectado.Close();
+            //comm.ExecuteReader();
+        }
+
+        public void alteradados_problemas(problema problema)
+        {
+            MySqlConnection conectado = conecta();
+            //update ic SET nome = 'Rene', descricao = 'Spina', imagem = 'Teste' where id_ic = 3
+            MySqlCommand comm = new MySqlCommand("UPDATE `problema` SET nome = '" + problema.nome + "', descricao = '" + problema.descricao + "', imagem = '" + problema.imagem + "', id_ic = '" + problema.id_ic + "' where id_problema = '" + problema.id_problema + "'", conectado);
             comm.ExecuteNonQuery();
             conectado.Close();
             //comm.ExecuteReader();
@@ -116,7 +159,7 @@ namespace baseConhecimento.Models
             return (conn);
         }
 
-        public void deletadados(int id)
+        public void deletadados_itens(int id)
         {
             MySqlConnection conectado = conecta();
             //update ic SET nome = 'Rene', descricao = 'Spina', imagem = 'Teste' where id_ic = 3
@@ -125,7 +168,16 @@ namespace baseConhecimento.Models
             conectado.Close();
         }
 
-        public void somaranking(int id)
+        public void deletadados_problemas(int id)
+        {
+            MySqlConnection conectado = conecta();
+            //update ic SET nome = 'Rene', descricao = 'Spina', imagem = 'Teste' where id_ic = 3
+            MySqlCommand comm = new MySqlCommand("DELETE FROM `problema` WHERE id_problema = '" + id + "'", conectado);
+            comm.ExecuteNonQuery();
+            conectado.Close();
+        }
+
+        public void somaranking_itens(int id)
         {
             MySqlConnection conectado = conecta();
             //update ic SET nome = 'Rene', descricao = 'Spina', imagem = 'Teste' where id_ic = 3
@@ -152,5 +204,31 @@ namespace baseConhecimento.Models
             reader.Close();
         }
 
+        public void somaranking_problemas(int id)
+        {
+            MySqlConnection conectado = conecta();
+            //update ic SET nome = 'Rene', descricao = 'Spina', imagem = 'Teste' where id_ic = 3
+            MySqlCommand retornaRanking = new MySqlCommand("SELECT * FROM problema WHERE id_problema =" + id, conectado);
+            MySqlDataReader reader = retornaRanking.ExecuteReader();
+            var ranking = 0;
+            while (reader.Read())
+            {
+                if (reader["ranking"].ToString() == "")
+                {
+                    ranking = 1;
+                }
+                else
+                {
+                    ranking = Convert.ToInt32(reader["ranking"].ToString());
+                    ranking = ++ranking;
+
+                }
+            }
+            reader.Close();
+            MySqlCommand comm = new MySqlCommand("UPDATE `problema` SET ranking = '" + ranking + "' where id_problema = '" + id + "'", conectado);
+            comm.ExecuteNonQuery();
+            conectado.Close();
+            reader.Close();
+        }
     }
 }

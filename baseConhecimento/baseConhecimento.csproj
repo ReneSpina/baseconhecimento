@@ -274,6 +274,9 @@
     <Content Include="Views\Items\Index.cshtml" />
     <Content Include="Views\Items\Editar.cshtml" />
     <Content Include="Views\Items\Edit1.cshtml" />
+    <Content Include="Views\Problemas\Details.cshtml" />
+    <Content Include="Views\Problemas\Create.cshtml" />
+    <Content Include="Views\Problemas\Edit.cshtml" />
     <Content Include="Views\Problemas\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
@@ -343,7 +346,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Problema\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

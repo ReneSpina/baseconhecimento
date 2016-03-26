@@ -9,7 +9,7 @@ namespace baseConhecimento.Models
     public class problema
     {
         [HiddenInput(DisplayValue = true)]
-        public int id_itens { get; set; }
+        public int id_problema { get; set; }
         public string nome { get; set; }
         public string descricao { get; set; }
         public int ranking { get; set; }

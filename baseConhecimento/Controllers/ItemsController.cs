@@ -20,7 +20,7 @@ namespace baseConhecimento.Controllers
         // GET: Items
         public ActionResult Index()
         {
-            Context db = new Context();
+            //Context db = new Context();
             //dados = db.conecta().;
             //MySqlConnection conn = db.conecta();
             //MySqlCommand cmd = new MySqlCommand("select *from ic",conn);
@@ -34,8 +34,8 @@ namespace baseConhecimento.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.retornavalor(id);
-            db.somaranking(id);
+            Item item = db.retornavalor_itens(id);
+            db.somaranking_itens(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -58,7 +58,7 @@ namespace baseConhecimento.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.inseredados(item);
+                db.inseredados_itens(item);
                 return RedirectToAction("Index");
             }
 
@@ -71,7 +71,7 @@ namespace baseConhecimento.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.retornavalor(id);
+            Item item = db.retornavalor_itens(id);
             if (item.nome == "")
             {
                 return HttpNotFound();
@@ -88,7 +88,7 @@ namespace baseConhecimento.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.alteradados(item);
+                db.alteradados_itens(item);
                 return RedirectToAction("Index");
             }
             return View(item);
@@ -100,7 +100,7 @@ namespace baseConhecimento.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            db.deletadados(id);
+            db.deletadados_itens(id);
             return RedirectToAction("Index");
         }
 
