@@ -273,7 +273,6 @@
     <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Items\Index.cshtml" />
     <Content Include="Views\Items\Editar.cshtml" />
-    <Content Include="Views\Items\Edit1.cshtml" />
     <Content Include="Views\Problemas\Details.cshtml" />
     <Content Include="Views\Problemas\Create.cshtml" />
     <Content Include="Views\Problemas\Edit.cshtml" />

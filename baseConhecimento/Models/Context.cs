@@ -14,6 +14,27 @@ namespace baseConhecimento.Models
     public class Context
     {
         MySqlConnection conn;
+
+        public MySqlConnection conecta()
+        {
+            string conexao = ConfigurationManager.ConnectionStrings["Context"].ConnectionString;
+            conn = new MySqlConnection(conexao);
+            try
+            {
+                conn.Open();
+                return conn;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public void desconecta(MySqlConnection conectado)
+        {
+                conn.Close();
+        }
+
         /*public Context()
         {
             //conn = new SqlConnection(
@@ -41,7 +62,7 @@ namespace baseConhecimento.Models
                 });
             }
             reader.Close();
-            conectado.Close();
+            desconecta(conectado);
             return (itens);
         }
 
@@ -67,7 +88,7 @@ namespace baseConhecimento.Models
             }
 
             reader.Close();
-            conectado.Close();
+            desconecta(conectado);
             return (problemas);
         }
 
@@ -76,7 +97,7 @@ namespace baseConhecimento.Models
         {
             MySqlConnection conectado = conecta();
             //MySqlDataReader reader = null;
-            MySqlCommand comm = new MySqlCommand("Insert Into `ic` (nome, descricao, imagem) values('"+ itens.nome + "','"+ itens.descricao + "','"+ itens.imagem+"')", conectado);
+            MySqlCommand comm = new MySqlCommand("Insert Into `ic` (nome, descricao, imagem) values('" + itens.nome + "','" + itens.descricao + "','" + itens.imagem + "')", conectado);
             comm.ExecuteNonQuery();
             conectado.Close();
         }
@@ -91,23 +112,51 @@ namespace baseConhecimento.Models
         }
 
 
+        public List<problema> retornadados_problemas_join(int id)
+        {
+            MySqlConnection conectado = conecta();
+            MySqlDataReader reader = null;
+            MySqlCommand comm = new MySqlCommand("SELECT * FROM problema inner join ic on problema.id_ic = ic.id_ic where problema.id_ic ="+id, conectado);
+            //List<Item> itens = new List<Item>();
+            reader = comm.ExecuteReader();
+            while (reader.Read())
+            {
+                problemas.Add(new problema()
+                {
+                    id_problema = Convert.ToInt32(reader["id_problema"].ToString()),
+                    nome = reader["nome"].ToString(),
+                    descricao = reader["descricao"].ToString(),
+                    ranking = Convert.ToInt32(reader["ranking"].ToString()),
+                    imagem = reader["imagem"].ToString(),
+                    id_ic = Convert.ToInt32(reader["id_ic"].ToString()),
+                    //item = retornadados_item(),
+                });
+            }
+
+            reader.Close();
+            desconecta(conectado);
+            return (problemas);
+        }
+
 
 
         public Item retornavalor_itens(int id)
         {
             Item item = new Item();
             MySqlConnection conectado = conecta();
-            MySqlCommand comm = new MySqlCommand("SELECT * FROM ic WHERE id_ic ="+id, conectado);
+            MySqlCommand comm = new MySqlCommand("SELECT * FROM ic WHERE id_ic =" + id, conectado);
             //comm.ExecuteReader();
             MySqlDataReader reader = comm.ExecuteReader();
             //reader = comm.ExecuteReader();
-            while(reader.Read())
+            while (reader.Read())
             {
                 item.id_ic = Convert.ToInt32(reader["id_ic"].ToString());
                 item.nome = reader["nome"].ToString();
                 item.descricao = reader["descricao"].ToString();
                 item.imagem = reader["imagem"].ToString();
+                item.id_ic = Convert.ToInt32(reader["id_ic"].ToString());
             }
+            item.problemas = retornadados_problemas_join(id);
             reader.Close();
             conectado.Close();
             return (item);
@@ -138,7 +187,7 @@ namespace baseConhecimento.Models
         {
             MySqlConnection conectado = conecta();
             //update ic SET nome = 'Rene', descricao = 'Spina', imagem = 'Teste' where id_ic = 3
-            MySqlCommand comm = new MySqlCommand("UPDATE `ic` SET nome = '"+item.nome+"', descricao = '"+item.descricao+"', imagem = '"+item.imagem+"' where id_ic = '"+item.id_ic+"'", conectado);
+            MySqlCommand comm = new MySqlCommand("UPDATE `ic` SET nome = '" + item.nome + "', descricao = '" + item.descricao + "', imagem = '" + item.imagem + "' where id_ic = '" + item.id_ic + "'", conectado);
             comm.ExecuteNonQuery();
             conectado.Close();
             //comm.ExecuteReader();
@@ -152,14 +201,6 @@ namespace baseConhecimento.Models
             comm.ExecuteNonQuery();
             conectado.Close();
             //comm.ExecuteReader();
-        }
-
-        public MySqlConnection conecta()
-        {
-            string conexao = ConfigurationManager.ConnectionStrings["Context"].ConnectionString;
-            conn = new MySqlConnection(conexao);
-            conn.Open();
-            return (conn);
         }
 
         public void deletadados_itens(int id)
@@ -189,7 +230,7 @@ namespace baseConhecimento.Models
             var ranking = 0;
             while (reader.Read())
             {
-                if(reader["ranking"].ToString() == "")
+                if (reader["ranking"].ToString() == "")
                 {
                     ranking = 1;
                 }

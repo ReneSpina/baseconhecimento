@@ -16,5 +16,6 @@ namespace baseConhecimento.Models
         public string descricao { get; set; }
         public int ranking { get; set; }
         public string imagem { get; set; }
+        public List<problema> problemas { get; set; }
     }
 }

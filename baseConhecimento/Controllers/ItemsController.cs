@@ -27,6 +27,7 @@ namespace baseConhecimento.Controllers
             //MySqlDataReader reader = cmd.ExecuteReader();
             return View(db.retornadados_item());
         }
+
         // GET: Items/Details/5
         public ActionResult Details(int id)
         {
