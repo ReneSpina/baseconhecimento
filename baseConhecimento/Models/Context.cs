@@ -62,14 +62,9 @@ namespace baseConhecimento.Models
                     ranking = Convert.ToInt32(reader["ranking"].ToString()),
                     imagem = reader["imagem"].ToString(),
                     id_ic = Convert.ToInt32(reader["id_ic"].ToString()),
+                    item = retornadados_item(),
                 });
             }
-            problemas.Add(new problema()
-            {
-                item = retornadados_item(),
-            //id_ic = Convert.ToInt32(reader["id_ic"].ToString()),
-            });
-
 
             reader.Close();
             conectado.Close();

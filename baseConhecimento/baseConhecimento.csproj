@@ -277,6 +277,7 @@
     <Content Include="Views\Problemas\Details.cshtml" />
     <Content Include="Views\Problemas\Create.cshtml" />
     <Content Include="Views\Problemas\Edit.cshtml" />
+    <Content Include="Views\Problemas\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
