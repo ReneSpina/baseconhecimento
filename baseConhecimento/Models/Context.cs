@@ -50,6 +50,7 @@ namespace baseConhecimento.Models
             MySqlConnection conectado = conecta();
             MySqlDataReader reader = null;
             MySqlCommand comm = new MySqlCommand("SELECT * FROM `problema` order by ranking desc", conectado);
+            List<Item> itens = new List<Item>();
             reader = comm.ExecuteReader();
             while (reader.Read())
             {
@@ -63,6 +64,13 @@ namespace baseConhecimento.Models
                     id_ic = Convert.ToInt32(reader["id_ic"].ToString()),
                 });
             }
+            problemas.Add(new problema()
+            {
+                item = retornadados_item(),
+            //id_ic = Convert.ToInt32(reader["id_ic"].ToString()),
+            });
+
+
             reader.Close();
             conectado.Close();
             return (problemas);

@@ -122,3 +122,4 @@ C:\Rene Novo\Desenvolvimento\Base de Conhecimento - CVC\Base de conhecimento\bas
 C:\Rene Novo\Desenvolvimento\Base de Conhecimento - CVC\Base de conhecimento\baseConhecimento\baseConhecimento\obj\Release\baseConhecimento.csproj.GenerateResource.Cache
 C:\Rene Novo\Desenvolvimento\Base de Conhecimento - CVC\Base de conhecimento\baseConhecimento\baseConhecimento\obj\Release\baseConhecimento.dll
 C:\Rene Novo\Desenvolvimento\Base de Conhecimento - CVC\Base de conhecimento\baseConhecimento\baseConhecimento\obj\Release\baseConhecimento.pdb
+C:\Rene Novo\Desenvolvimento\Base de Conhecimento - CVC\Base de conhecimento\baseConhecimento\baseConhecimento\obj\Release\baseConhecimento.csprojResolveAssemblyReference.cache
