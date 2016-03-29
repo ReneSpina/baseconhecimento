@@ -75,12 +75,21 @@ namespace baseConhecimento.Models
             reader = comm.ExecuteReader();
             while (reader.Read())
             {
+                var rankingV = 0;
+                if (reader["ranking"].ToString() == "")
+                {
+                    rankingV = 1;
+                }
+                else
+                {
+                    rankingV = Convert.ToInt32(reader["ranking"].ToString());
+                }
                 problemas.Add(new problema()
                 {
                     id_problema = Convert.ToInt32(reader["id_problema"].ToString()),
                     nome = reader["nome"].ToString(),
                     descricao = reader["descricao"].ToString(),
-                    ranking = Convert.ToInt32(reader["ranking"].ToString()),
+                    ranking = rankingV,//Convert.ToInt32(reader["ranking"].ToString()),
                     imagem = reader["imagem"].ToString(),
                     id_ic = Convert.ToInt32(reader["id_ic"].ToString()),
                     item = retornadados_item(),
@@ -116,20 +125,29 @@ namespace baseConhecimento.Models
         {
             MySqlConnection conectado = conecta();
             MySqlDataReader reader = null;
-            MySqlCommand comm = new MySqlCommand("SELECT * FROM problema inner join ic on problema.id_ic = ic.id_ic where problema.id_ic ="+id, conectado);
+            MySqlCommand comm = new MySqlCommand("SELECT `problema`.`id_problema`, `problema`.`nome`, `problema`.`descricao`, `problema`.`ranking`, `problema`.`imagem`, `problema`.`id_ic` FROM `problema` inner join `ic` on `problema`.`id_ic` = `ic`.`id_ic` where `problema`.`id_ic` ="+id, conectado);
             //List<Item> itens = new List<Item>();
             reader = comm.ExecuteReader();
             while (reader.Read())
             {
+                var rankingV = 0;
+                if(reader["ranking"].ToString() == "")
+                {
+                    rankingV = 1;
+                }
+                else
+                {
+                    rankingV = Convert.ToInt32(reader["ranking"].ToString());
+                }
                 problemas.Add(new problema()
                 {
                     id_problema = Convert.ToInt32(reader["id_problema"].ToString()),
                     nome = reader["nome"].ToString(),
                     descricao = reader["descricao"].ToString(),
-                    ranking = Convert.ToInt32(reader["ranking"].ToString()),
+                    ranking = rankingV,//Convert.ToInt32(reader["ranking"].ToString()),
                     imagem = reader["imagem"].ToString(),
                     id_ic = Convert.ToInt32(reader["id_ic"].ToString()),
-                    //item = retornadados_item(),
+                    //item = null,
                 });
             }
 
@@ -178,6 +196,7 @@ namespace baseConhecimento.Models
                 problema.imagem = reader["imagem"].ToString();
                 problema.id_ic = Convert.ToInt32(reader["id_ic"].ToString());
             }
+            problema.item = retornadados_item();
             reader.Close();
             conectado.Close();
             return (problema);

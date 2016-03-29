@@ -43,7 +43,7 @@ namespace baseConhecimento.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_problema,nome,descricao,imagem, ranking, id_ic")] problema problema)
+        public ActionResult Create([Bind(Include = "nome,descricao,imagem, id_ic, item")] problema problema)
         {
             if (ModelState.IsValid)
             {
