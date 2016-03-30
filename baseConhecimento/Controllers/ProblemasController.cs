@@ -35,7 +35,7 @@ namespace baseConhecimento.Controllers
         // GET: Problemas/Create
         public ActionResult Create()
         {
-            return View();
+            return View(db.retornavalor_problemas(-1));
         }
 
         // POST: problemas/Create
@@ -43,7 +43,7 @@ namespace baseConhecimento.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "nome,descricao,imagem, id_ic, item")] problema problema)
+        public ActionResult Create([Bind(Include = "nome,descricao,imagem, id_ic")] problema problema)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace baseConhecimento.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id_problema,nome,descricao,ranking,imagem, id_ic")] problema problema)
+        public ActionResult Edit([Bind(Include = "id_problema, nome,descricao,imagem, id_ic")] problema problema)
         {
             if (ModelState.IsValid)
             {

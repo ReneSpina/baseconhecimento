@@ -16,13 +16,8 @@
         <h4>problema</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.id_problema, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.id_problema, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.id_problema, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
+        @Html.HiddenFor(model => model.id_problema, new { @Value = Model.id_problema })
 
         <div class="form-group">
             @Html.LabelFor(model => model.nome, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -41,14 +36,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ranking, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ranking, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ranking, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.imagem, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.imagem, new { htmlAttributes = new { @class = "form-control" } })
@@ -57,16 +44,20 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.id_ic, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="id_ic">Itens</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.id_ic, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.id_ic, "", new { @class = "text-danger" })
+                <select id="id_ic" name="id_ic">
+                    @for (int i = 0; i < Model.item.Count(); ++i)
+                {
+                        <option value="@Model.item[i].id_ic">@Model.item[i].nome</option>
+                    }
+                </select>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Edit" class="btn btn-default" />
             </div>
         </div>
     </div>

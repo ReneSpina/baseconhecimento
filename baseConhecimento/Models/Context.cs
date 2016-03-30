@@ -184,22 +184,35 @@ namespace baseConhecimento.Models
         {
             problema problema = new problema();
             MySqlConnection conectado = conecta();
-            MySqlCommand comm = new MySqlCommand("SELECT * FROM problema WHERE id_problema =" + id, conectado);
-            //comm.ExecuteReader();
-            MySqlDataReader reader = comm.ExecuteReader();
-            //reader = comm.ExecuteReader();
-            while (reader.Read())
+            if(id == -1)
             {
-                problema.id_problema = Convert.ToInt32(reader["id_problema"].ToString());
-                problema.nome = reader["nome"].ToString();
-                problema.descricao = reader["descricao"].ToString();
-                problema.imagem = reader["imagem"].ToString();
-                problema.id_ic = Convert.ToInt32(reader["id_ic"].ToString());
+                problema.id_problema = 1;
+                problema.nome = "Digite seu problema";
+                problema.descricao = "Descreva seu problema";
+                problema.imagem = "Qual o nome da imagem?";
+                problema.id_ic = -1;
+                problema.item = retornadados_item();
+                return (problema);
             }
-            problema.item = retornadados_item();
-            reader.Close();
-            conectado.Close();
-            return (problema);
+            else
+            {
+                MySqlCommand comm = new MySqlCommand("SELECT * FROM problema WHERE id_problema =" + id, conectado);
+                //comm.ExecuteReader();
+                MySqlDataReader reader = comm.ExecuteReader();
+                //reader = comm.ExecuteReader();
+                while (reader.Read())
+                {
+                    problema.id_problema = Convert.ToInt32(reader["id_problema"].ToString());
+                    problema.nome = reader["nome"].ToString();
+                    problema.descricao = reader["descricao"].ToString();
+                    problema.imagem = reader["imagem"].ToString();
+                    problema.id_ic = Convert.ToInt32(reader["id_ic"].ToString());
+                }
+                problema.item = retornadados_item();
+                reader.Close();
+                conectado.Close();
+                return (problema);
+            }
         }
 
         public void alteradados_itens(Item item)

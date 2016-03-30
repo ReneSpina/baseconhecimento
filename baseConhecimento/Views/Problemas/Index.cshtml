@@ -5,35 +5,42 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Nossos Problemas</h2>
+
+<p>
+    @Html.ActionLink("Novo problema", "Create")
+</p>
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.id_problema)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.descricao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ranking)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.imagem)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.item)
-        </th>
-        <th></th>
-    </tr>
+@{
+    int i = 1;
+}
 
-@foreach (var item in Model)
+<div id="tabela">
+    <div class="linha">
+
+        @foreach (var problema in Model)
+        {
+            <a href="/Problemas/Details/@problema.id_problema">
+                <div class="coluna" id="@i">
+                    <img src="~/Imagens/@(problema.imagem).jpg" alt="Sem Imagem">
+                    <p class="nome"> @problema.nome </p>
+                    @*Html.ActionLink(itens.nome, "Details", new { id = itens.id_ic })*@
+                </div>
+                @*Html.ActionLink("Detalhes", "Details", new { id = itens.id_ic }) |*@
+                <div>
+                </div>
+            </a>
+            i = ++i;
+        }
+    </div>
+</div>
+
+
+@*foreach (var item in Model)
 {
     <tr>
         <td>
@@ -52,7 +59,7 @@
             @Html.DisplayFor(modelItem => item.imagem)
         </td>
          <td>
-             @item.item.Find(x => x.id_ic ==item.id_ic).nome
+             
          </td>
 
 
@@ -61,7 +68,7 @@
             <td>
                 @Html.DisplayFor(m => item.item[i].nome)
             </td>
-        }*@
+        }
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
@@ -69,7 +76,5 @@
         </td>
     </tr>
 }
-
-    
-
 </table>
+*@
